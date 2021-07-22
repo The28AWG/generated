@@ -14,7 +14,8 @@ dependencies:
   json_serializable: ^5.0.0
   equatable: ^2.0.3
   dark_novels_io:
-    git: https://github.com/The28AWG/dark_novels_io
+    git:
+      url: git@github.com:The28AWG/dark_novels_io.git
 
 dev_dependencies:
   flutter_test:
