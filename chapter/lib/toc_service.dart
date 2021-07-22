@@ -16,6 +16,7 @@ class TocService {
             ..get()
             ..path = {
               ':id': bookId,
-            })
+            }
+            ..attribute = {'type': List})
           .execute();
 }
