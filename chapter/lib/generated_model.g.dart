@@ -117,31 +117,6 @@ Map<String, dynamic> _$CreateThemeVariableToJson(
       'defaultValue': instance.defaultValue,
     };
 
-Device _$DeviceFromJson(Map<String, dynamic> json) => $checkedCreate(
-      'Device',
-      json,
-      ($checkedConvert) {
-        $checkKeys(
-          json,
-          allowedKeys: const ['deviceId', 'userAgent', 'platform', 'browser'],
-        );
-        final val = Device(
-          deviceId: $checkedConvert('deviceId', (v) => v as String),
-          userAgent: $checkedConvert('userAgent', (v) => v as String),
-          platform: $checkedConvert('platform', (v) => v as String),
-          browser: $checkedConvert('browser', (v) => v as String),
-        );
-        return val;
-      },
-    );
-
-Map<String, dynamic> _$DeviceToJson(Device instance) => <String, dynamic>{
-      'deviceId': instance.deviceId,
-      'userAgent': instance.userAgent,
-      'platform': instance.platform,
-      'browser': instance.browser,
-    };
-
 Chapter _$ChapterFromJson(Map<String, dynamic> json) => $checkedCreate(
       'Chapter',
       json,

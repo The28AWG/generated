@@ -106,32 +106,6 @@ class CreateThemeVariable extends Equatable {
 }
 
 @JsonSerializable()
-class Device extends Equatable {
-  final String deviceId;
-  final String userAgent;
-  final String platform;
-  final String browser;
-
-  Device({
-    required this.deviceId,
-    required this.userAgent,
-    required this.platform,
-    required this.browser,
-  });
-
-  List<Object?> get props => [
-        this.deviceId,
-        this.userAgent,
-        this.platform,
-        this.browser,
-      ];
-
-  factory Device.fromJson(Map<String, dynamic> json) => _$DeviceFromJson(json);
-
-  Map<String, dynamic> toJson() => _$DeviceToJson(this);
-}
-
-@JsonSerializable()
 class Chapter extends Equatable {
   final int id;
   final String title;
