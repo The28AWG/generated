@@ -39,6 +39,21 @@ class TocItem extends Equatable {
   final bool volume;
   final bool publishedAtShow;
 
+  TocItem.zeroVolume()
+      : this.id = 0,
+        this.title = 'Том 0',
+        this.volume = true,
+        this.position = -1,
+        this.purchase = false,
+        this.images = false,
+        this.price = 0.0,
+        this.visible = 2,
+        this.updatedAt = Jiffy(),
+        this.publishedAt = Jiffy(),
+        this.payed = 0,
+        this.read = false,
+        this.publishedAtShow = false;
+
   TocItem({
     required this.id,
     required this.title,
