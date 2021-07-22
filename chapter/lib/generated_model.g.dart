@@ -6,57 +6,6 @@ part of 'generated_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-TocItem _$TocItemFromJson(Map<String, dynamic> json) => $checkedCreate(
-      'TocItem',
-      json,
-      ($checkedConvert) {
-        $checkKeys(
-          json,
-          allowedKeys: const [
-            'id',
-            'title',
-            'visible',
-            'position',
-            'publishedAt',
-            'updatedAt',
-            'images',
-            'read',
-            'payed',
-            'price',
-            'purchase'
-          ],
-        );
-        final val = TocItem(
-          id: $checkedConvert('id', (v) => v as int),
-          title: $checkedConvert('title', (v) => v as String),
-          visible: $checkedConvert('visible', (v) => v as int),
-          position: $checkedConvert('position', (v) => v as int),
-          publishedAt: $checkedConvert('publishedAt', (v) => v as String),
-          updatedAt: $checkedConvert('updatedAt', (v) => v as String),
-          images: $checkedConvert('images', (v) => v as bool),
-          read: $checkedConvert('read', (v) => v as bool),
-          payed: $checkedConvert('payed', (v) => v as int),
-          price: $checkedConvert('price', (v) => (v as num).toDouble()),
-          purchase: $checkedConvert('purchase', (v) => v as bool),
-        );
-        return val;
-      },
-    );
-
-Map<String, dynamic> _$TocItemToJson(TocItem instance) => <String, dynamic>{
-      'id': instance.id,
-      'title': instance.title,
-      'visible': instance.visible,
-      'position': instance.position,
-      'publishedAt': instance.publishedAt,
-      'updatedAt': instance.updatedAt,
-      'images': instance.images,
-      'read': instance.read,
-      'payed': instance.payed,
-      'price': instance.price,
-      'purchase': instance.purchase,
-    };
-
 Revision _$RevisionFromJson(Map<String, dynamic> json) => $checkedCreate(
       'Revision',
       json,

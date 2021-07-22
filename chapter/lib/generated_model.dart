@@ -4,54 +4,6 @@ import 'package:json_annotation/json_annotation.dart';
 part 'generated_model.g.dart';
 
 @JsonSerializable()
-class TocItem extends Equatable {
-  final int id;
-  final String title;
-  final int visible;
-  final int position;
-  final String publishedAt;
-  final String updatedAt;
-  final bool images;
-  final bool read;
-  final int payed;
-  final double price;
-  final bool purchase;
-
-  TocItem({
-    required this.id,
-    required this.title,
-    required this.visible,
-    required this.position,
-    required this.publishedAt,
-    required this.updatedAt,
-    required this.images,
-    required this.read,
-    required this.payed,
-    required this.price,
-    required this.purchase,
-  });
-
-  List<Object?> get props => [
-        this.id,
-        this.title,
-        this.visible,
-        this.position,
-        this.publishedAt,
-        this.updatedAt,
-        this.images,
-        this.read,
-        this.payed,
-        this.price,
-        this.purchase,
-      ];
-
-  factory TocItem.fromJson(Map<String, dynamic> json) =>
-      _$TocItemFromJson(json);
-
-  Map<String, dynamic> toJson() => _$TocItemToJson(this);
-}
-
-@JsonSerializable()
 class Revision extends Equatable {
   final int id;
   final int version;
