@@ -36,14 +36,14 @@ class ChapterService {
 class GetChapter extends Equatable {
   final List<int> chapters;
   final int bookId;
-  final String format;
-  final String theme;
+  final String? format;
+  final String? theme;
 
   GetChapter({
     required this.chapters,
     required this.bookId,
-    required this.format,
-    required this.theme,
+    this.format,
+    this.theme,
   });
 
   List<Object?> get props => [
@@ -315,8 +315,8 @@ class Chapter extends Equatable {
   final int visible;
   final int position;
   final Revision revision;
-  final String beforeComment;
-  final String afterComment;
+  final String? beforeComment;
+  final String? afterComment;
   final String publishedAt;
   final String createdAt;
   final String updatedAt;
@@ -327,8 +327,8 @@ class Chapter extends Equatable {
     required this.visible,
     required this.position,
     required this.revision,
-    required this.beforeComment,
-    required this.afterComment,
+    this.beforeComment,
+    this.afterComment,
     required this.publishedAt,
     required this.createdAt,
     required this.updatedAt,
@@ -405,7 +405,7 @@ Map<String, dynamic> _$ChapterToJson(Chapter instance) => <String, dynamic>{
 class Revision extends Equatable {
   final int id;
   final int version;
-  final String revisionComment;
+  final String? revisionComment;
   final bool images;
   final String createdAt;
 
@@ -450,7 +450,7 @@ Revision _$RevisionFromJson(Map<String, dynamic> json) => $checkedCreate(
           version: $checkedConvert('version', (v) => v as int),
           revisionComment:
               $checkedConvert('revisionComment', (v) => v as String),
-          images: $checkedConvert('images', (v) => v as bool),
+          images: $checkedConvert('images', (v) => v as bool?) ?? false,
           createdAt: $checkedConvert('createdAt', (v) => v as String),
         );
         return val;
