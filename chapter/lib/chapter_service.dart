@@ -17,7 +17,7 @@ class ChapterService {
   }) =>
       (io.newRequest('/v2/chapter/')
             ..upload()
-            ..model = model)
+            ..query = model)
           .execute();
 
   Future<Response> getMetadata({
