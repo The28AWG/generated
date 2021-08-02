@@ -34,20 +34,20 @@ class ChapterService {
 }
 
 class GetChapter extends Equatable {
-  final List<int> chapters;
+  final int chapterId;
   final int bookId;
   final String? format;
   final String? theme;
 
   GetChapter({
-    required this.chapters,
+    required this.chapterId,
     required this.bookId,
     this.format,
     this.theme,
   });
 
   List<Object?> get props => [
-        this.chapters,
+        this.chapterId,
         this.bookId,
         this.format,
         this.theme,
@@ -57,7 +57,7 @@ class GetChapter extends Equatable {
       _$GetChapterFromJson(json);
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'c': this.chapters,
+        'c[]': chapterId,
         'b': this.bookId,
         'f': this.format,
         't': this.theme,
@@ -70,11 +70,10 @@ GetChapter _$GetChapterFromJson(Map<String, dynamic> json) => $checkedCreate(
       ($checkedConvert) {
         $checkKeys(
           json,
-          allowedKeys: const ['chapters', 'bookId', 'format', 'theme'],
+          allowedKeys: const ['chapterId', 'bookId', 'format', 'theme'],
         );
         final val = GetChapter(
-          chapters: $checkedConvert('chapters',
-              (v) => (v as List<dynamic>).map((e) => e as int).toList()),
+          chapterId: $checkedConvert('chapterId', (v) => v as int),
           bookId: $checkedConvert('bookId', (v) => v as int),
           format: $checkedConvert('format', (v) => v as String),
           theme: $checkedConvert('theme', (v) => v as String),
