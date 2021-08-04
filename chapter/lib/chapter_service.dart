@@ -136,7 +136,7 @@ Map<String, dynamic> _$ManifestToJson(Manifest instance) => <String, dynamic>{
 
 class PricingStrategy extends Equatable {
   final int id;
-  final int price;
+  final double price;
   final int state;
   final Jiffy createdAt;
   final Jiffy updatedAt;
@@ -174,7 +174,7 @@ PricingStrategy _$PricingStrategyFromJson(Map<String, dynamic> json) =>
         );
         final val = PricingStrategy(
           id: $checkedConvert('id', (v) => v as int),
-          price: $checkedConvert('price', (v) => v as int),
+          price: $checkedConvert('price', (v) => v as double),
           state: $checkedConvert('state', (v) => v as int),
           createdAt: Jiffy($checkedConvert('createdAt', (v) => v as String)),
           updatedAt: Jiffy($checkedConvert('updatedAt', (v) => v as String)),
