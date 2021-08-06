@@ -1,4 +1,4 @@
-name: chapter
+name: billing
 description: dark novels model
 version: 0.0.1
 homepage: https://dark-novels.ru/
@@ -15,8 +15,7 @@ dependencies:
   equatable: ^2.0.3
   jiffy: ^4.1.0
   dark_novels_io:
-    git:
-      url: git@github.com:The28AWG/dark_novels_io.git
+    git: https://github.com/The28AWG/dark_novels_io
 
 dev_dependencies:
   flutter_test:
