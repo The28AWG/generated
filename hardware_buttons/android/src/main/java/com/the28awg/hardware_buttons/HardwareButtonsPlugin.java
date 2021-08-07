@@ -44,6 +44,7 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
 
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+        detachKeyWatcher();
         this.eventChannel.setStreamHandler(null);
         this.eventChannel = null;
         System.out.println("HardwareButtonsPlugin.onDetachedFromEngine");
@@ -52,11 +53,13 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
     @Override
     public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
         this.activity = binding.getActivity();
+        attachKeyWatcherIfNeeded();
         System.out.println("HardwareButtonsPlugin.onAttachedToActivity");
     }
 
     @Override
     public void onDetachedFromActivityForConfigChanges() {
+        detachKeyWatcher();
         this.activity = null;
         userDeniedDrawOverlaysPermission = false;
         System.out.println("HardwareButtonsPlugin.onDetachedFromActivityForConfigChanges");
@@ -70,6 +73,7 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
 
     @Override
     public void onDetachedFromActivity() {
+        detachKeyWatcher();
         this.activity = null;
         userDeniedDrawOverlaysPermission = false;
         System.out.println("HardwareButtonsPlugin.onDetachedFromActivity");
@@ -78,11 +82,13 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
     @Override
     public void onListen(Object arguments, EventChannel.EventSink events) {
         this.events = events;
+        attachKeyWatcherIfNeeded();
         System.out.println("HardwareButtonsPlugin.onListen");
     }
 
     @Override
     public void onCancel(Object arguments) {
+        detachKeyWatcher();
         this.events = null;
         System.out.println("HardwareButtonsPlugin.onCancel");
     }
@@ -108,6 +114,20 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
                 addOverlayWindowView(activity.getApplicationContext(), keyWatcher);
             }
         }
+    }
+
+    private void detachKeyWatcher() {
+        if (activity != null) {
+            removeOverlayWindowView(activity.getApplicationContext(), keyWatcher);
+            this.keyWatcher = null;
+        }
+    }
+
+    private void removeOverlayWindowView(
+            Context context,
+            View view
+    ) {
+        ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).removeView(view);
     }
 
     private void addOverlayWindowView(
