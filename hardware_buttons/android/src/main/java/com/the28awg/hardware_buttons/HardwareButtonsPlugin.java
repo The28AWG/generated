@@ -34,65 +34,67 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
+        System.out.println("HardwareButtonsPlugin.onAttachedToEngine");
         this.eventChannel = new EventChannel(
                 binding.getBinaryMessenger(),
                 HARDWARE_BUTTONS_CHANNEL_NAME
         );
         this.eventChannel.setStreamHandler(this);
-        System.out.println("HardwareButtonsPlugin.onAttachedToEngine");
     }
 
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+        System.out.println("HardwareButtonsPlugin.onDetachedFromEngine");
         detachKeyWatcher();
         this.eventChannel.setStreamHandler(null);
         this.eventChannel = null;
-        System.out.println("HardwareButtonsPlugin.onDetachedFromEngine");
     }
 
     @Override
     public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
-        this.activity = binding.getActivity();
-        attachKeyWatcherIfNeeded();
         System.out.println("HardwareButtonsPlugin.onAttachedToActivity: " + activity.getClass());
+        this.activity = binding.getActivity();
+        binding.addActivityResultListener(this);
+        attachKeyWatcherIfNeeded();
     }
 
     @Override
     public void onDetachedFromActivityForConfigChanges() {
+        System.out.println("HardwareButtonsPlugin.onDetachedFromActivityForConfigChanges");
         detachKeyWatcher();
         this.activity = null;
         userDeniedDrawOverlaysPermission = false;
-        System.out.println("HardwareButtonsPlugin.onDetachedFromActivityForConfigChanges");
     }
 
     @Override
     public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
+        System.out.println("HardwareButtonsPlugin.onReattachedToActivityForConfigChanges");
         detachKeyWatcher();
         this.activity = binding.getActivity();
+        binding.addActivityResultListener(this);
         attachKeyWatcherIfNeeded();
-        System.out.println("HardwareButtonsPlugin.onReattachedToActivityForConfigChanges");
     }
 
     @Override
     public void onDetachedFromActivity() {
+        System.out.println("HardwareButtonsPlugin.onDetachedFromActivity");
         detachKeyWatcher();
         this.activity = null;
         userDeniedDrawOverlaysPermission = false;
-        System.out.println("HardwareButtonsPlugin.onDetachedFromActivity");
     }
 
     @Override
     public void onListen(Object arguments, EventChannel.EventSink events) {
+        System.out.println("HardwareButtonsPlugin.onListen");
         this.events = events;
         attachKeyWatcherIfNeeded();
-        System.out.println("HardwareButtonsPlugin.onListen");
     }
 
     @Override
     public void onCancel(Object arguments) {
+        System.out.println("HardwareButtonsPlugin.onCancel");
         detachKeyWatcher();
         this.events = null;
-        System.out.println("HardwareButtonsPlugin.onCancel");
     }
 
     private void attachKeyWatcherIfNeeded() {
@@ -119,6 +121,7 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
     }
 
     private void detachKeyWatcher() {
+        System.out.println("HardwareButtonsPlugin.detachKeyWatcher");
         if (activity != null) {
             removeOverlayWindowView(activity.getApplicationContext(), keyWatcher);
             this.keyWatcher = null;
