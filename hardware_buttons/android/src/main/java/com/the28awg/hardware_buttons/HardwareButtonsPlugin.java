@@ -219,10 +219,10 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
             return false;
         }
 
-//        @Override
-//        public View findFocus() {
-//            return findFocusCallback != null ? findFocusCallback.findFocus() : super.findFocus();
-//        }
+        @Override
+        public View findFocus() {
+            return findFocusCallback != null ? findFocusCallback.findFocus() : super.findFocus();
+        }
     }
 
     interface KeyEventCallback {
