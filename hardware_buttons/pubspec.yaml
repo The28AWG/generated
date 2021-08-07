@@ -1,0 +1,22 @@
+name: hardware_buttons
+description: dark novels hardware buttons
+version: 0.0.1
+homepage: https://dark-novels.ru/
+publish_to: none
+
+environment:
+  sdk: '>=2.13.0-0 <3.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  plugin:
+    androidPackage: com.the28awg.hardware_buttons
+    pluginClass: HardwareButtonsPlugin
