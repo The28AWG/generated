@@ -32,10 +32,12 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
     private EventChannel.EventSink events;
     private KeyWatcher keyWatcher;
     private boolean userDeniedDrawOverlaysPermission = false;
+    private Context applicationContext;
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
         System.out.println("HardwareButtonsPlugin.onAttachedToEngine");
+        applicationContext = binding.getApplicationContext();
         this.eventChannel = new EventChannel(
                 binding.getBinaryMessenger(),
                 HARDWARE_BUTTONS_CHANNEL_NAME
@@ -49,6 +51,7 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
         detachKeyWatcher();
         this.eventChannel.setStreamHandler(null);
         this.eventChannel = null;
+        this.applicationContext = null;
     }
 
     @Override
@@ -100,8 +103,8 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
 
     private void attachKeyWatcherIfNeeded() {
         System.out.println("HardwareButtonsPlugin.attachKeyWatcherIfNeeded");
-        if (this.events != null && keyWatcher == null && !userDeniedDrawOverlaysPermission && activity != null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(activity.getApplicationContext())) {
+        if (this.events != null && keyWatcher == null && !userDeniedDrawOverlaysPermission && activity != null && applicationContext != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(applicationContext)) {
                 Intent intent = new Intent(
                         Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                         Uri.parse("package:" + activity.getApplicationContext().getPackageName())
@@ -116,15 +119,15 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
                         this::dispatchKeyEvent,
                         this::findFocus
                 );
-                addOverlayWindowView(activity.getApplicationContext(), keyWatcher);
+                addOverlayWindowView(applicationContext, keyWatcher);
             }
         }
     }
 
     private void detachKeyWatcher() {
         System.out.println("HardwareButtonsPlugin.detachKeyWatcher");
-        if (activity != null) {
-            removeOverlayWindowView(activity.getApplicationContext(), keyWatcher);
+        if (applicationContext != null) {
+            removeOverlayWindowView(applicationContext, keyWatcher);
             this.keyWatcher = null;
         }
     }
