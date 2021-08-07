@@ -39,46 +39,56 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
                 HARDWARE_BUTTONS_CHANNEL_NAME
         );
         this.eventChannel.setStreamHandler(this);
+        System.out.println("HardwareButtonsPlugin.onAttachedToEngine");
     }
 
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
         this.eventChannel.setStreamHandler(null);
         this.eventChannel = null;
+        System.out.println("HardwareButtonsPlugin.onDetachedFromEngine");
     }
 
     @Override
     public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
         this.activity = binding.getActivity();
+        System.out.println("HardwareButtonsPlugin.onAttachedToActivity");
     }
 
     @Override
     public void onDetachedFromActivityForConfigChanges() {
         this.activity = null;
+        userDeniedDrawOverlaysPermission = false;
+        System.out.println("HardwareButtonsPlugin.onDetachedFromActivityForConfigChanges");
     }
 
     @Override
     public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
         this.activity = binding.getActivity();
+        System.out.println("HardwareButtonsPlugin.onReattachedToActivityForConfigChanges");
     }
 
     @Override
     public void onDetachedFromActivity() {
         this.activity = null;
         userDeniedDrawOverlaysPermission = false;
+        System.out.println("HardwareButtonsPlugin.onDetachedFromActivity");
     }
 
     @Override
     public void onListen(Object arguments, EventChannel.EventSink events) {
         this.events = events;
+        System.out.println("HardwareButtonsPlugin.onListen");
     }
 
     @Override
     public void onCancel(Object arguments) {
         this.events = null;
+        System.out.println("HardwareButtonsPlugin.onCancel");
     }
 
     private void attachKeyWatcherIfNeeded() {
+        System.out.println("HardwareButtonsPlugin.attachKeyWatcherIfNeeded");
         if (keyWatcher == null && !userDeniedDrawOverlaysPermission && activity != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(activity.getApplicationContext())) {
                 Intent intent = new Intent(
@@ -104,6 +114,7 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
             Context context,
             View view
     ) {
+        System.out.println("HardwareButtonsPlugin.addOverlayWindowView");
         int windowType = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ?
                 WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
                 : WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
@@ -120,6 +131,7 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
     }
 
     public View findFocus() {
+        System.out.println("HardwareButtonsPlugin.findFocus");
         if (activity != null) {
             Window window = activity.getWindow();
             if (window != null) {
@@ -132,6 +144,7 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
     private void dispatchKeyEvent(
             KeyEvent event
     ) {
+        System.out.println("HardwareButtonsPlugin.dispatchKeyEvent");
         if (activity != null) {
             activity.dispatchKeyEvent(event);
         }
@@ -146,6 +159,7 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
             int resultCode,
             Intent data
     ) {
+        System.out.println("HardwareButtonsPlugin.onActivityResult");
         if (requestCode == REQUEST_CODE_OVERLAY_PERMISSION && activity != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Settings.canDrawOverlays(activity.getApplicationContext())) {
                 userDeniedDrawOverlaysPermission = false;
@@ -176,6 +190,7 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
         public boolean dispatchKeyEvent(
                 KeyEvent event
         ) {
+            System.out.println("KeyWatcher.dispatchKeyEvent");
             if (callback != null) {
                 callback.onKey(event);
             }
@@ -184,6 +199,7 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
 
         @Override
         public View findFocus() {
+            System.out.println("KeyWatcher.findFocus");
             return findFocusCallback.findFocus();
         }
     }
