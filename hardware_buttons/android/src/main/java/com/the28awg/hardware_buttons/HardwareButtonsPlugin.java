@@ -52,8 +52,8 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
 
     @Override
     public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
-        System.out.println("HardwareButtonsPlugin.onAttachedToActivity: " + activity.getClass());
         this.activity = binding.getActivity();
+        System.out.println("HardwareButtonsPlugin.onAttachedToActivity: " + activity.getClass());
         binding.addActivityResultListener(this);
         attachKeyWatcherIfNeeded();
     }
