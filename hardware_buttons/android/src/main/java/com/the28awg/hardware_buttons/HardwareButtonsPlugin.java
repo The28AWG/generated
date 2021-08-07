@@ -54,7 +54,7 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
     public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
         this.activity = binding.getActivity();
         attachKeyWatcherIfNeeded();
-        System.out.println("HardwareButtonsPlugin.onAttachedToActivity");
+        System.out.println("HardwareButtonsPlugin.onAttachedToActivity: " + activity.getClass());
     }
 
     @Override
@@ -67,7 +67,9 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
 
     @Override
     public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
+        detachKeyWatcher();
         this.activity = binding.getActivity();
+        attachKeyWatcherIfNeeded();
         System.out.println("HardwareButtonsPlugin.onReattachedToActivityForConfigChanges");
     }
 
@@ -95,7 +97,7 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
 
     private void attachKeyWatcherIfNeeded() {
         System.out.println("HardwareButtonsPlugin.attachKeyWatcherIfNeeded");
-        if (keyWatcher == null && !userDeniedDrawOverlaysPermission && activity != null) {
+        if (this.events != null && keyWatcher == null && !userDeniedDrawOverlaysPermission && activity != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(activity.getApplicationContext())) {
                 Intent intent = new Intent(
                         Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
