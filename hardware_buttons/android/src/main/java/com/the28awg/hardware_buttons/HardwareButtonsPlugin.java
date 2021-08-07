@@ -20,6 +20,7 @@ import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.plugin.common.EventChannel;
 import io.flutter.plugin.common.PluginRegistry;
 
+@SuppressWarnings({"unused", "RedundantSuppression"})
 public class HardwareButtonsPlugin implements FlutterPlugin,
         ActivityAware,
         EventChannel.StreamHandler,
@@ -135,6 +136,7 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
         ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).removeView(view);
     }
 
+    @SuppressWarnings({"deprecation", "RedundantSuppression"})
     private void addOverlayWindowView(
             Context context,
             View view
@@ -152,7 +154,10 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
                 PixelFormat.TRANSLUCENT
         );
 
-        ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).addView(view, params);
+        WindowManager windowManager = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE));
+        if (windowManager != null) {
+            windowManager.addView(view, params);
+        }
     }
 
     public View findFocus() {
@@ -225,7 +230,7 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
         @Override
         public View findFocus() {
             System.out.println("KeyWatcher.findFocus");
-            return findFocusCallback.findFocus();
+            return findFocusCallback != null ? findFocusCallback.findFocus() : super.findFocus();
         }
     }
 
