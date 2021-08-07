@@ -107,7 +107,7 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(applicationContext)) {
                 Intent intent = new Intent(
                         Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                        Uri.parse("package:" + activity.getApplicationContext().getPackageName())
+                        Uri.parse("package:" + applicationContext.getPackageName())
                 );
                 activity.startActivityForResult(
                         intent,
@@ -115,33 +115,32 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
                 );
             } else {
                 keyWatcher = new KeyWatcher(
-                        activity.getApplicationContext(),
+                        applicationContext,
                         this::dispatchKeyEvent,
                         this::findFocus
                 );
-                addOverlayWindowView(applicationContext, keyWatcher);
+                addOverlayWindowView(keyWatcher);
             }
         }
     }
 
     private void detachKeyWatcher() {
         System.out.println("HardwareButtonsPlugin.detachKeyWatcher");
-        if (applicationContext != null) {
-            removeOverlayWindowView(applicationContext, keyWatcher);
-            this.keyWatcher = null;
-        }
+        removeOverlayWindowView(keyWatcher);
+        this.keyWatcher = null;
     }
 
     private void removeOverlayWindowView(
-            Context context,
             View view
     ) {
-        ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).removeView(view);
+        WindowManager windowManager = ((WindowManager) applicationContext.getSystemService(Context.WINDOW_SERVICE));
+        if (windowManager != null) {
+            windowManager.removeView(view);
+        }
     }
 
     @SuppressWarnings({"deprecation", "RedundantSuppression"})
     private void addOverlayWindowView(
-            Context context,
             View view
     ) {
         System.out.println("HardwareButtonsPlugin.addOverlayWindowView");
@@ -157,7 +156,7 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
                 PixelFormat.TRANSLUCENT
         );
 
-        WindowManager windowManager = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE));
+        WindowManager windowManager = ((WindowManager) applicationContext.getSystemService(Context.WINDOW_SERVICE));
         if (windowManager != null) {
             windowManager.addView(view, params);
         }
@@ -168,7 +167,12 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
         if (activity != null) {
             Window window = activity.getWindow();
             if (window != null) {
-                return window.getDecorView().getRootView();
+                try {
+                    return window.getDecorView().getRootView();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
             }
         }
         return null;
