@@ -50,5 +50,5 @@ android {
 }
 
 dependencies {
-    api "io.flutter:flutter_embedding_debug:1.0.0-015b6806e13abc4d23f5511d639a73248b79fa49"
+    // api "io.flutter:flutter_embedding_debug:1.0.0-015b6806e13abc4d23f5511d639a73248b79fa49"
 }
