@@ -25,6 +25,6 @@ dev_dependencies:
 
 dependency_overrides:
   meta: ^1.7.0
-  analyzer: ^2.0.0
+  analyzer: ^2.1.0
 
 flutter:
