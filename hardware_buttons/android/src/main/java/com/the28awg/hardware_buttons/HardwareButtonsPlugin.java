@@ -124,8 +124,12 @@ public class HardwareButtonsPlugin implements FlutterPlugin,
             View view
     ) {
         WindowManager windowManager = ((WindowManager) applicationContext.getSystemService(Context.WINDOW_SERVICE));
-        if (windowManager != null) {
-            windowManager.removeView(view);
+        if (windowManager != null && view != null) {
+            try {
+                windowManager.removeView(view);
+            } catch (Exception ignore) {
+
+            }
         }
     }
 
