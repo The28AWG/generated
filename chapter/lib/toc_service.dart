@@ -38,6 +38,7 @@ class TocItem extends Equatable {
   final bool purchase;
   final bool volume;
   final bool publishedAtShow;
+  final bool protection;
 
   TocItem.zeroVolume()
       : this.id = 0,
@@ -52,7 +53,8 @@ class TocItem extends Equatable {
         this.publishedAt = Jiffy(),
         this.payed = 0,
         this.read = false,
-        this.publishedAtShow = false;
+        this.publishedAtShow = false,
+        this.protection = false;
 
   TocItem({
     required this.id,
@@ -68,6 +70,7 @@ class TocItem extends Equatable {
     required this.purchase,
     required this.volume,
     required this.publishedAtShow,
+    required this.protection,
   });
 
   List<Object?> get props => [
@@ -84,6 +87,7 @@ class TocItem extends Equatable {
         this.purchase,
         this.volume,
         this.publishedAtShow,
+        this.protection,
       ];
 
   factory TocItem.fromJson(Map<String, dynamic> json) => _$custom(json);
@@ -108,7 +112,8 @@ TocItem _$custom(Map<String, dynamic> json) => $checkedCreate(
             'read',
             'payed',
             'price',
-            'purchase'
+            'purchase',
+            'protection'
           ],
         );
         String title = $checkedConvert('title', (v) => v as String);
@@ -149,20 +154,26 @@ TocItem _$custom(Map<String, dynamic> json) => $checkedCreate(
         Jiffy updatedAt = Jiffy(
           $checkedConvert('updatedAt', (v) => v as String),
         );
+        bool? protection = $checkedConvert('protection', (v) => v as bool?);
+        if (protection == null) {
+          protection = false;
+        }
         final val = TocItem(
-            id: $checkedConvert('id', (v) => v as int),
-            title: title,
-            visible: visible,
-            position: $checkedConvert('position', (v) => v as int),
-            publishedAt: publishedAt,
-            updatedAt: updatedAt,
-            images: images,
-            read: read,
-            payed: payed,
-            price: price,
-            purchase: purchase,
-            volume: volume,
-            publishedAtShow: publishedAtShow);
+          id: $checkedConvert('id', (v) => v as int),
+          title: title,
+          visible: visible,
+          position: $checkedConvert('position', (v) => v as int),
+          publishedAt: publishedAt,
+          updatedAt: updatedAt,
+          images: images,
+          read: read,
+          payed: payed,
+          price: price,
+          purchase: purchase,
+          volume: volume,
+          publishedAtShow: publishedAtShow,
+          protection: protection,
+        );
         return val;
       },
     );
