@@ -147,9 +147,8 @@ TocItem _$custom(Map<String, dynamic> json) => $checkedCreate(
         if (purchase == null) {
           purchase = false;
         }
-        Jiffy publishedAt = Jiffy(
-          $checkedConvert('publishedAt', (v) => v as String),
-        );
+        String? tmp = $checkedConvert('publishedAt', (v) => v as String?);
+        Jiffy publishedAt = tmp == null ? Jiffy() : Jiffy(tmp);
         bool publishedAtShow = publishedAt.isAfter(Jiffy());
         Jiffy updatedAt = Jiffy(
           $checkedConvert('updatedAt', (v) => v as String),
