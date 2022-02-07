@@ -316,9 +316,9 @@ class Chapter extends Equatable {
   final Revision revision;
   final String? beforeComment;
   final String? afterComment;
-  final String publishedAt;
-  final String createdAt;
-  final String updatedAt;
+  final Jiffy publishedAt;
+  final Jiffy createdAt;
+  final Jiffy updatedAt;
 
   Chapter({
     required this.id,
@@ -371,6 +371,12 @@ Chapter _$ChapterFromJson(Map<String, dynamic> json) => $checkedCreate(
             'updatedAt'
           ],
         );
+        String? tmp = $checkedConvert('publishedAt', (v) => v as String?);
+        Jiffy publishedAt = tmp == null ? Jiffy() : Jiffy(tmp);
+        tmp = $checkedConvert('createdAt', (v) => v as String?);
+        Jiffy createdAt = tmp == null ? Jiffy() : Jiffy(tmp);
+        tmp = $checkedConvert('updatedAt', (v) => v as String?);
+        Jiffy updatedAt = tmp == null ? Jiffy() : Jiffy(tmp);
         final val = Chapter(
           id: $checkedConvert('id', (v) => v as int),
           title: $checkedConvert('title', (v) => v as String),
@@ -378,11 +384,11 @@ Chapter _$ChapterFromJson(Map<String, dynamic> json) => $checkedCreate(
           position: $checkedConvert('position', (v) => v as int),
           revision: $checkedConvert(
               'revision', (v) => Revision.fromJson(v as Map<String, dynamic>)),
-          beforeComment: $checkedConvert('beforeComment', (v) => v as String),
-          afterComment: $checkedConvert('afterComment', (v) => v as String),
-          publishedAt: $checkedConvert('publishedAt', (v) => v as String),
-          createdAt: $checkedConvert('createdAt', (v) => v as String),
-          updatedAt: $checkedConvert('updatedAt', (v) => v as String),
+          beforeComment: $checkedConvert('beforeComment', (v) => v as String?),
+          afterComment: $checkedConvert('afterComment', (v) => v as String?),
+          publishedAt: publishedAt,
+          createdAt: createdAt,
+          updatedAt: updatedAt,
         );
         return val;
       },
