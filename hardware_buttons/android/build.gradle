@@ -12,15 +12,16 @@ def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
     throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
+String storageUrl = System.getenv('FLUTTER_STORAGE_BASE_URL') ?: "https://storage.googleapis.com"
 buildscript {
-    ext.kotlin_version = '1.5.21'
+    ext.kotlin_version = '1.8.10'
     repositories {
         google()
         mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.2'
+        classpath 'com.android.tools.build:gradle:7.2.0'
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:' + kotlin_version
     }
 }
@@ -30,7 +31,7 @@ rootProject.allprojects {
         google()
         mavenCentral()
         maven {
-            url 'http://download.flutter.io'
+            url "$storageUrl/download.flutter.io"
         }
     }
 }
